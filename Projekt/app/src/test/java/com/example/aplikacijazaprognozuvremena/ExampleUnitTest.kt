@@ -1,4 +1,4 @@
-package com.example.projekt
+package com.example.aplikacijazaprognozuvremena
 
 import org.junit.Test
 

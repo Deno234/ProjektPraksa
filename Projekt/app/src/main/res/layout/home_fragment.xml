@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible">
+
+    <LinearLayout
+        android:id="@+id/addressContainer"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/address"
+            android:textSize="24sp"
+            android:text="Location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/datum_i_vrijeme"
+            android:textSize="14sp"
+            android:text="Datum i vrijeme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/currentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/forecastContainer"
+        android:layout_below="@id/addressContainer"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/status"
+            android:text="Sunčano"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TextView>
+
+        <TextView
+            android:id="@+id/currentTemperature"
+            android:textSize="90sp"
+            android:fontFamily="sans-serif-thin"
+            android:text="24°C"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TextView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/forecastContainer"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/forecastTodayContainer"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/today"
+                android:text="Danas"
+                android:textSize="20sp"
+                android:layout_marginLeft="20dp"
+                android:gravity="center_vertical"
+                android:layout_width="70dp"
+                android:layout_height="match_parent">
+
+            </TextView>
+
+            <LinearLayout
+                android:id="@+id/forecastTodayCenterContainer"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/today_image"
+                    android:src="@drawable/sunny"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp">
+
+                </ImageView>
+
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent">
+
+                </Space>
+
+                <TextView
+                    android:id="@+id/forecastTodayPercentage"
+                    android:text="42%"
+                    android:textSize="20sp"
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                </TextView>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/today_minmax"
+                android:text="Min/Maks"
+                android:textSize="20sp"
+                android:layout_marginRight="20dp"
+                android:gravity="right|center_vertical"
+                android:layout_width="70dp"
+                android:layout_height="match_parent">
+
+            </TextView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/forecastTomorrowContainer"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tomorrow"
+                android:text="Dan"
+                android:textSize="20sp"
+                android:layout_marginLeft="20dp"
+                android:gravity="center_vertical"
+                android:layout_width="70dp"
+                android:layout_height="match_parent">
+
+            </TextView>
+
+            <LinearLayout
+                android:id="@+id/forecastTomorrowCenterContainer"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/tomorrow_image"
+                    android:src="@drawable/sunny"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp">
+
+                </ImageView>
+
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent">
+
+                </Space>
+
+                <TextView
+                    android:id="@+id/forecastTomorrowPercentage"
+                    android:text="42%"
+                    android:textSize="20sp"
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                </TextView>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tomorrow_minmax"
+                android:text="Min/Maks"
+                android:textSize="20sp"
+                android:layout_marginRight="20dp"
+                android:gravity="right|center_vertical"
+                android:layout_width="70dp"
+                android:layout_height="match_parent">
+
+            </TextView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/forecastDay3Container"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/day3"
+                android:text="Dan"
+                android:textSize="20sp"
+                android:layout_marginLeft="20dp"
+                android:gravity="center_vertical"
+                android:layout_width="70dp"
+                android:layout_height="match_parent">
+
+            </TextView>
+
+            <LinearLayout
+                android:id="@+id/forecastDay3CenterContainer"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/day3_image"
+                    android:src="@drawable/sunny"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp">
+
+                </ImageView>
+
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent">
+
+                </Space>
+
+                <TextView
+                    android:id="@+id/forecastDay3Percentage"
+                    android:text="42%"
+                    android:textSize="20sp"
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                </TextView>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/day3_minmax"
+                android:text="Min/Maks"
+                android:textSize="20sp"
+                android:layout_marginRight="20dp"
+                android:gravity="right|center_vertical"
+                android:layout_width="70dp"
+                android:layout_height="match_parent">
+
+            </TextView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
