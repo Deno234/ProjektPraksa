@@ -1,3 +1,37 @@
 <resources>
     <string name="app_name">Aplikacija za prognozu vremena</string>
+    <string name="location">Location</string>
+    <string name="datum_i_vrijeme">Datum i vrijeme</string>
+    <string name="tr_status">Sunčano</string>
+    <string name="tr_temp">24°C</string>
+    <string name="danas">Danas</string>
+    <string name="percentage_of_rain_today">42%</string>
+    <string name="today_min_max">Min/Maks</string>
+    <string name="tomorrow_rain_percentage">42%</string>
+    <string name="tomorrow_min_max">Min/Maks</string>
+    <string name="day3_min_max">Min/Maks</string>
+    <string name="tomorrow">Dan</string>
+    <string name="day3">Dan</string>
+    <string name="day3_rain_percentage">42%</string>
+    <string name="sunrise">Izlazak Sunca</string>
+    <string name="sunrise_time">5:30am</string>
+    <string name="sunset">Zalazak Sunca</string>
+    <string name="sunset_time">5:30am</string>
+    <string name="wind">Vjetar</string>
+    <string name="wind_speed">5:30am</string>
+    <string name="pressure">Tlak</string>
+    <string name="pressure_value">5:30am</string>
+    <string name="humidity">Vlaga</string>
+    <string name="humidity_value">5:30am</string>
+    <string name="created_by">Stvorio</string>
+    <string name="Creator">Denis Ibiši</string>
+    <string name="first_hour_temperature">24°C</string>
+    <string name="first_hour">17:00</string>
+    <string name="second_hour_temperature">24°C</string>
+    <string name="second_hour">18:00</string>
+    <string name="third_hour_temperature">25°C</string>
+    <string name="third_hour">19:00</string>
+    <string name="fourth_hour_temperature">29°C</string>
+    <string name="fourth_hour">20:00</string>
+    <string name="drop_of_rain">drop of rain</string>
 </resources>
