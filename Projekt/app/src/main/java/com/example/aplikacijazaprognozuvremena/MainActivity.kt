@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.aplikacijazaprognozuvremena.databinding.ActivityMainBinding
+import com.example.aplikacijazaprognozuvremena.homeview.HomeFragment
 
 class MainActivity : AppCompatActivity() {
 
