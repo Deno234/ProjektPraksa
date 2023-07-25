@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import com.example.aplikacijazaprognozuvremena.R
 import com.example.aplikacijazaprognozuvremena.databinding.HomeFragmentBinding
 
-class HomeFragment : Fragment(R.layout.home_fragment) {
+class HomeFragment : Fragment() {
 
     private val viewModel: HomeFragmentModel by viewModels()
 
