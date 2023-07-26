@@ -14,31 +14,27 @@ enum class WeatherApiStatus { LOADING, ERROR, DONE }
 
 class HomeFragmentModel : ViewModel() {
 
-    // The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<WeatherApiStatus>()
-    private val _weatherData = MutableLiveData<WeatherData>()
+    private val _weatherData = MutableLiveData<WeatherData?>()
 
-    // The external immutable LiveData for the weather data and the request status
-    val weatherData: LiveData<WeatherData> = _weatherData
+    val weatherData: MutableLiveData<WeatherData?> = _weatherData
     val status: LiveData<WeatherApiStatus> = _status
 
-    // The properties that are bound to the views in the layout
-    val address = MutableLiveData<String>()
+    /*val address = MutableLiveData<String>()
     val dateAndTime = MutableLiveData<String>()
     val statusText = MutableLiveData<String>()
     val currentTemperature = MutableLiveData<String>()
-    val todayImage = MutableLiveData<Int>()
+    val todayImage = MutableLiveData<Int?>()
     val todayHumidity = MutableLiveData<String>()
     val todayWindSpeed = MutableLiveData<String>()
     val todayMaxTemp = MutableLiveData<String>()
     val todayMinTemp = MutableLiveData<String>()
-    val tomorrowImage = MutableLiveData<Int>()
+    val tomorrowImage = MutableLiveData<Int?>()
     val tomorrowHumidity = MutableLiveData<String>()
     val tomorrowWindSpeed = MutableLiveData<String>()
     val tomorrowMaxTemp = MutableLiveData<String>()
-    val tomorrowMinTemp = MutableLiveData<String>()
+    val tomorrowMinTemp = MutableLiveData<String>()*/
 
-    // The formatter for displaying the date and time
     private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
 
     /**
@@ -70,7 +66,7 @@ class HomeFragmentModel : ViewModel() {
     /**
      * Updates the properties that are bound to the views in the layout with the weather data.
      */
-    private fun updateProperties() {
+    /*private fun updateProperties() {
         weatherData.value?.let { data ->
             address.value = data.name
             dateAndTime.value = dateFormat.format(Date(data.dt * 1000))
@@ -88,13 +84,19 @@ class HomeFragmentModel : ViewModel() {
                 String.format("%.1f°C", data.main.temp_min - 273.15) // iz kelvina u celzijus
             // TODO: get the forecast data for tomorrow and update the properties accordingly
         }
+    }*/
+
+    private fun updateProperties() {
+        weatherData.value?.let { data ->
+            weatherData.value = data
+        }
     }
 
-    /**
-     * Clears the properties that are bound to the views in the layout when there is an error.
-     */
+
+
     private fun clearProperties() {
-        address.value = ""
+        weatherData.value = null
+        /*address.value = ""
         dateAndTime.value = ""
         statusText.value = ""
         currentTemperature.value = ""
@@ -107,7 +109,7 @@ class HomeFragmentModel : ViewModel() {
         tomorrowHumidity.value = ""
         tomorrowWindSpeed.value = ""
         tomorrowMaxTemp.value = ""
-        tomorrowMinTemp.value = ""
+        tomorrowMinTemp.value = ""*/
     }
 
     /**
