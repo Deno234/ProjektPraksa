@@ -14,26 +14,13 @@ enum class WeatherApiStatus { LOADING, ERROR, DONE }
 
 class HomeFragmentModel : ViewModel() {
 
+
+
     private val _status = MutableLiveData<WeatherApiStatus>()
     private val _weatherData = MutableLiveData<WeatherData?>()
 
     val weatherData: MutableLiveData<WeatherData?> = _weatherData
     val status: LiveData<WeatherApiStatus> = _status
-
-    /*val address = MutableLiveData<String>()
-    val dateAndTime = MutableLiveData<String>()
-    val statusText = MutableLiveData<String>()
-    val currentTemperature = MutableLiveData<String>()
-    val todayImage = MutableLiveData<Int?>()
-    val todayHumidity = MutableLiveData<String>()
-    val todayWindSpeed = MutableLiveData<String>()
-    val todayMaxTemp = MutableLiveData<String>()
-    val todayMinTemp = MutableLiveData<String>()
-    val tomorrowImage = MutableLiveData<Int?>()
-    val tomorrowHumidity = MutableLiveData<String>()
-    val tomorrowWindSpeed = MutableLiveData<String>()
-    val tomorrowMaxTemp = MutableLiveData<String>()
-    val tomorrowMinTemp = MutableLiveData<String>()*/
 
     private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
 
@@ -82,7 +69,7 @@ class HomeFragmentModel : ViewModel() {
                 String.format("%.1f°C", data.main.temp_max - 273.15) // iz kelvina u celzijus
             todayMinTemp.value =
                 String.format("%.1f°C", data.main.temp_min - 273.15) // iz kelvina u celzijus
-            // TODO: get the forecast data for tomorrow and update the properties accordingly
+            //
         }
     }*/
 
@@ -96,20 +83,6 @@ class HomeFragmentModel : ViewModel() {
 
     private fun clearProperties() {
         weatherData.value = null
-        /*address.value = ""
-        dateAndTime.value = ""
-        statusText.value = ""
-        currentTemperature.value = ""
-        todayImage.value = null
-        todayHumidity.value = ""
-        todayWindSpeed.value = ""
-        todayMaxTemp.value = ""
-        todayMinTemp.value = ""
-        tomorrowImage.value = null
-        tomorrowHumidity.value = ""
-        tomorrowWindSpeed.value = ""
-        tomorrowMaxTemp.value = ""
-        tomorrowMinTemp.value = ""*/
     }
 
     /**
