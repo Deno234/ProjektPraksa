@@ -34,7 +34,7 @@
             android:id="@+id/datum_i_vrijeme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/datum_i_vrijeme"
+            android:text="@{viewModel.currentDateTime}"
             android:textSize="14sp">
 
         </TextView>
@@ -54,7 +54,7 @@
             android:id="@+id/status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.weatherData.base}"
+            android:text="@{viewModel.weatherDataValue.weather[0].main}"
             android:textSize="18sp" />
 
         <TextView
@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-thin"
-            android:text="@string/tr_temp"
+            android:text="@{viewModel.currentTemperature}"
             android:textSize="90sp" />
 
     </LinearLayout>
@@ -479,7 +479,7 @@
                     android:id="@+id/sunrise"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/sunrise_time"
+                    android:text="@{viewModel.formattedSunrise}"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -515,7 +515,7 @@
                     android:id="@+id/sunset"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/sunset_time"
+                    android:text="@{viewModel.formattedSunset}"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -551,7 +551,7 @@
                     android:id="@+id/wind"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/wind_speed"
+                    android:text="@{viewModel.formattedWindSpeed}"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -599,7 +599,7 @@
                     android:id="@+id/pressure"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/pressure_value"
+                    android:text="@{viewModel.formattedPressure}"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -635,7 +635,7 @@
                     android:id="@+id/humidity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/humidity_value"
+                    android:text="@{viewModel.formattedHumidity}"
                     android:textSize="14sp" />
             </LinearLayout>
 
