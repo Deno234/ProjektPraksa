@@ -19,7 +19,7 @@ private val retrofit = Retrofit.Builder()
 interface WeatherApiService {
     @GET("data/2.5/weather")
     suspend fun getWeather (
-        @Query("q") city: String = "London,uk",
+        @Query("q") city: String,
         @Query("appid") apiKey: String = API_KEY ): WeatherData
 }
 

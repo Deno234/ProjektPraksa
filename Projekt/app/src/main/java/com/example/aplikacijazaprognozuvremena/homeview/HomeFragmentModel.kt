@@ -53,22 +53,16 @@ class HomeFragmentModel : ViewModel() {
 
     private val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
     private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
-    /**
-     * Call getWeatherData() on init so we can display data immediately.
-     */
+
     init {
-        getWeatherData()
+        getWeatherData("London,uk")
     }
 
-    /**
-     * Gets weather data information from the Weather API Retrofit service and updates the
-     * [WeatherData] [LiveData].
-     */
-    private fun getWeatherData() {
+    fun getWeatherData(city: String) {
         viewModelScope.launch {
             _status.value = WeatherApiStatus.LOADING
             try {
-                _weatherData.value = WeatherApi.retrofitService.getWeather()
+                _weatherData.value = WeatherApi.retrofitService.getWeather(city)
                 Log.d("HomeFragmentModel", "weatherData: ${_weatherData.value}")
                 _status.value = WeatherApiStatus.DONE
                 updateProperties()
@@ -81,35 +75,6 @@ class HomeFragmentModel : ViewModel() {
             }
         }
     }
-
-    /**
-     * Updates the properties that are bound to the views in the layout with the weather data.
-     */
-    /*private fun updateProperties() {
-        weatherData.value?.let { data ->
-            address.value = data.name
-            dateAndTime.value = dateFormat.format(Date(data.dt * 1000))
-            statusText.value = data.weather[0].main
-            currentTemperature.value =
-                String.format("%.1f°C", data.main.temp - 273.15) // iz kelvina u celzijus
-            todayImage.value = getImageResource(data.weather[0].icon)
-            todayHumidity.value =
-                String.format("%d%%", data.main.humidity) // nadodaj postotak
-            todayWindSpeed.value =
-                String.format("%.1f m/s", data.wind.speed) // nadodaj mjernu jedinicu
-            todayMaxTemp.value =
-                String.format("%.1f°C", data.main.temp_max - 273.15) // iz kelvina u celzijus
-            todayMinTemp.value =
-                String.format("%.1f°C", data.main.temp_min - 273.15) // iz kelvina u celzijus
-            //
-        }
-    }*/
-
-    /*private fun updateProperties() {
-        weatherData.value?.let { data ->
-            weatherData.value = data
-        }
-    }*/
 
     private fun updateProperties() {
         weatherData.value?.let { data ->
@@ -133,10 +98,12 @@ class HomeFragmentModel : ViewModel() {
         weatherData.value = null
     }
 
-    /**
-     * Returns the image resource id that corresponds to the weather icon code.
-     */
-    private fun getImageResource(icon: String): Int {
+    fun getWeatherDataValue(): LiveData<WeatherData?> {
+        return weatherData
+    }
+}
+
+/* private fun getImageResource(icon: String): Int {
         return when (icon) {
             "01d" -> R.drawable.sunny
             "01n" -> R.drawable.clear_night
@@ -150,9 +117,4 @@ class HomeFragmentModel : ViewModel() {
             "50d", "50n" -> R.drawable.foggy
             else -> R.drawable.unknown
         }
-    }
-
-    fun getWeatherDataValue(): LiveData<WeatherData?> {
-        return weatherData
-    }
-}
+    }*/
