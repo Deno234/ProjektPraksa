@@ -63,9 +63,11 @@ class SearchFragment() : Fragment() {
         City("Tirana","al"),
         City("Vaduz","li"),
         City("Valletta","mt"),
+        City("Vatican City", "va"),
         City("Vienna", "at"),
         City("Vilnius","lt"),
-        City("Zagreb", "hr")
+        City("Zagreb", "hr"),
+        City("Warsaw","pl")
     )
 
     interface onCitySelectedListener {
