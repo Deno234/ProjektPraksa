@@ -47,29 +47,19 @@ class HomeFragment() : Fragment(), SearchFragment.onCitySelectedListener {
 
         val locationTextView: TextView = view.findViewById(R.id.address)
         locationTextView.setOnClickListener {
-            /*val searchFragment = SearchFragment(findNavController())
-            parentFragmentManager.beginTransaction().replace(R.id.fragmentContainer, searchFragment).addToBackStack(null).commit()*/
             findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
         }
 
-        val navController = findNavController()
-        val currentBackStackEntry = navController.currentBackStackEntry
-        //val viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-        //val viewModel2 = ViewModelProvider(requireActivity()).get(HomeFragmentModel::class.java)
-        //viewModel.selectedCity.observe(viewLifecycleOwner)
-        currentBackStackEntry?.savedStateHandle?.getLiveData<City>("selectedCity")?.observe(viewLifecycleOwner)
-        { city ->
-            // Update information on home screen based on selected city
-            val cityNameTextView: TextView = view.findViewById(R.id.address)
-            cityNameTextView.text = city.name
+        val sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        sharedViewModel.selectedCity.observe(viewLifecycleOwner)
+            { city ->
+                val cityNameTextView: TextView = view.findViewById(R.id.address)
+                cityNameTextView.text = city.name
 
-            viewModel.getWeatherData(city.name)
-            Log.d("HomeFragment", "selected City observe")
-        }
+                viewModel.getWeatherData(city.name)
+                Log.d("HomeFragment", "selected City observe")
+            }
     }
-
-
-
 
 
 }

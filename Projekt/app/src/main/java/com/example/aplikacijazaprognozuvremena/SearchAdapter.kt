@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.findFragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
@@ -20,17 +21,8 @@ class SearchAdapter(private var data: List<City>, private val searchFragment: Se
         init {
             itemView.setOnClickListener {
                 val city = data[adapterPosition]
-                val navController = itemView.findNavController()
-                val homeBackStackEntry = navController.getBackStackEntry(R.id.homeFragment)
-                homeBackStackEntry.savedStateHandle.set("selectedCity", city)
-                //onCitySelectedListener?.onCitySelected(city)
-                /*val navHostFragment = itemView.findFragment<NavHostFragment>()
-
-                navHostFragment.navController.popBackStack()*/
-                //NavHostFragment.findNavController(searchFragment).popBackStack()
-                //Navigation.findNavController(searchFragment.requireView()).popBackStack()
-                //Navigation.findNavController(searchFragment.requireActivity(), R.id.fragmentContainer).popBackStack()
-                //Navigation.findNavController(searchFragment.requireView()).popBackStack()
+                val sharedViewModel = ViewModelProvider(searchFragment.requireActivity()).get(SharedViewModel::class.java)
+                sharedViewModel.setSelectedCity(city)
                 navController.popBackStack()
             }
         }

@@ -16,8 +16,6 @@ enum class WeatherApiStatus { LOADING, ERROR, DONE }
 
 class HomeFragmentModel : ViewModel() {
 
-
-
     private val _status = MutableLiveData<WeatherApiStatus>()
     private val _weatherData = MutableLiveData<WeatherData?>()
 
@@ -85,7 +83,6 @@ class HomeFragmentModel : ViewModel() {
             _formattedHumidity.value = "${data.main.humidity}%"
             _formattedPressure.value = "${data.main.pressure} hPa"
             _formattedWindSpeed.value = "${data.wind.speed} m/s"
-            //_currentTemperature.value = kelvinToCelsius(data.main.temp).toString()
             _currentTemperature.value = round(kelvinToCelsius(data.main.temp)).toInt().toString() + " °C"
             _todayMaxTemp.value = kelvinToCelsius(data.main.temp_max).toString()
             _todayMinTemp.value = kelvinToCelsius(data.main.temp_min).toString()

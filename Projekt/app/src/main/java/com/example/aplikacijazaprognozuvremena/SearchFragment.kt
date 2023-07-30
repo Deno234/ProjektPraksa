@@ -20,7 +20,6 @@ import kotlinx.parcelize.Parcelize
 data class City(val name: String, val country: String) : Parcelable
 
 class SearchFragment() : Fragment() {
-    // TODO: Rename and change types of parameters
     private lateinit var searchEditText: EditText
     private lateinit var citiesRecyclerView: RecyclerView
     private val cities = listOf(
@@ -77,7 +76,6 @@ class SearchFragment() : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_search, container, false)
         val viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         searchEditText = view.findViewById(R.id.search_edit_text)
@@ -89,7 +87,6 @@ class SearchFragment() : Fragment() {
 
         searchEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -101,7 +98,6 @@ class SearchFragment() : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-
             }
         })
 
@@ -110,11 +106,7 @@ class SearchFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        /*val homeFragment = parentFragmentManager.findFragmentByTag("home") as? SearchFragment.onCitySelectedListener
-        (citiesRecyclerView.adapter as? SearchAdapter)?.onCitySelectedListener = homeFragment*/
         val homeFragment = findNavController().previousBackStackEntry?.destination?.id?.let { parentFragmentManager.findFragmentById(it) } as? SearchFragment.onCitySelectedListener
         (citiesRecyclerView.adapter as? SearchAdapter)?.onCitySelectedListener = homeFragment
-
     }
 }
