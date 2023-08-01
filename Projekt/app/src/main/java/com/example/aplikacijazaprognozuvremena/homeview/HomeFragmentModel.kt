@@ -124,5 +124,20 @@ class HomeFragmentModel : ViewModel() {
     fun getWeatherDataValue(): LiveData<WeatherData?> {
         return weatherData
     }
+
+    fun translateWeatherCondition(weatherCondition: String?): String {
+        if (weatherCondition == null) {
+            return ""
+        }
+        return when (weatherCondition) {
+            "Clear" -> "Vedro"
+            "Clouds" -> "Oblaci"
+            "Rain" -> "Kiša"
+            "Thunderstorm" -> "Grmljavina"
+            "Snow" -> "Snijeg"
+            "Fog" -> "Magla"
+            else -> weatherCondition
+        }
+    }
 }
 
