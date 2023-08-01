@@ -79,7 +79,6 @@ class SearchFragment() : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_search, container, false)
-        val viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         searchEditText = view.findViewById(R.id.search_edit_text)
         citiesRecyclerView = view.findViewById(R.id.cities_recycler_view)
 

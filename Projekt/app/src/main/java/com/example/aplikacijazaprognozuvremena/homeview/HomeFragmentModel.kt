@@ -1,6 +1,8 @@
 package com.example.aplikacijazaprognozuvremena.homeview
 
+import android.media.Image
 import android.util.Log
+import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -40,6 +42,9 @@ class HomeFragmentModel : ViewModel() {
     private val _currentTemperature = MutableLiveData<String>()
     val currentTemperature: LiveData<String> = _currentTemperature
 
+    private val _feelsLike = MutableLiveData<String>()
+    val feelsLike: LiveData<String> = _feelsLike
+
     private val _todayMaxTemp = MutableLiveData<String>()
     val todayMaxTemp: LiveData<String> = _todayMaxTemp
 
@@ -51,6 +56,12 @@ class HomeFragmentModel : ViewModel() {
 
     private val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
     private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+
+    private val _todayMinMax = MutableLiveData<String>()
+    val todayMinMax: LiveData<String> = _todayMinMax
+
+    private val _weatherImageResource = MutableLiveData<Int>()
+    val weatherImageResource: LiveData<Int> = _weatherImageResource
 
     init {
         getWeatherData("London,uk")
@@ -76,19 +87,34 @@ class HomeFragmentModel : ViewModel() {
 
     private fun updateProperties() {
         weatherData.value?.let { data ->
-            val kelvinToCelsius = {kelvin: Double -> kelvin - 273.15}
+            val kelvinToCelsius = { kelvin: Double -> kelvin - 273.15 }
             _currentDateTime.value = dateFormat.format(Date())
             _formattedSunrise.value = timeFormat.format(Date(data.sys.sunrise * 1000))
             _formattedSunset.value = timeFormat.format(Date(data.sys.sunset * 1000))
             _formattedHumidity.value = "${data.main.humidity}%"
             _formattedPressure.value = "${data.main.pressure} hPa"
             _formattedWindSpeed.value = "${data.wind.speed} m/s"
-            _currentTemperature.value = round(kelvinToCelsius(data.main.temp)).toInt().toString() + " °C"
-            _todayMaxTemp.value = kelvinToCelsius(data.main.temp_max).toString()
-            _todayMinTemp.value = kelvinToCelsius(data.main.temp_min).toString()
+            _currentTemperature.value =
+                round(kelvinToCelsius(data.main.temp)).toInt().toString() + " °C"
+            _feelsLike.value =
+                round(kelvinToCelsius(data.main.feels_like)).toInt().toString() + " °C"
+            _todayMaxTemp.value =
+                round(kelvinToCelsius(data.main.temp_max)).toInt().toString() + " °C"
+            _todayMinTemp.value =
+                round(kelvinToCelsius(data.main.temp_min)).toInt().toString() + " °C"
+            _todayMinMax.value = "${_todayMinTemp.value} /\n ${todayMaxTemp.value}  "
+            val weatherCondition = data.weather[0].main
+            val weatherImageResource = when (weatherCondition) {
+                "Clouds" -> R.drawable.cloudy
+                "Clear" -> R.drawable.sunny
+                "Rain" -> R.drawable.rainy
+                "Snow" -> R.drawable.snowy
+                "Fog" -> R.drawable.foggy
+                else -> R.drawable.thunderstorm
+            }
+            _weatherImageResource.value = weatherImageResource
         }
     }
-
 
 
     private fun clearProperties() {
@@ -100,18 +126,3 @@ class HomeFragmentModel : ViewModel() {
     }
 }
 
-/* private fun getImageResource(icon: String): Int {
-        return when (icon) {
-            "01d" -> R.drawable.sunny
-            "01n" -> R.drawable.clear_night
-            "02d" -> R.drawable.partly_cloudy_day
-            "02n" -> R.drawable.partly_cloudy_night
-            "03d", "03n", "04d", "04n" -> R.drawable.cloudy
-            "09d", "09n" -> R.drawable.rainy
-            "10d", "10n" -> R.drawable.rainy_sunny
-            "11d", "11n" -> R.drawable.thunderstorm
-            "13d", "13n" -> R.drawable.snowy
-            "50d", "50n" -> R.drawable.foggy
-            else -> R.drawable.unknown
-        }
-    }*/
