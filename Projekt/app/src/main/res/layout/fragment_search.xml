@@ -6,7 +6,6 @@
     android:orientation="vertical"
     tools:context=".SearchFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <EditText
         android:id="@+id/search_edit_text"
         android:layout_width="match_parent"

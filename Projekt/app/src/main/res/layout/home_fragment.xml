@@ -10,9 +10,14 @@
             type="com.example.aplikacijazaprognozuvremena.homeview.HomeFragmentModel" />
     </data>
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         tools:context="com.example.aplikacijazaprognozuvremenea.HomeFragment">
 
         <LinearLayout
@@ -47,9 +52,10 @@
         <LinearLayout
             android:id="@+id/currTempContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/forecastContainer"
+            android:layout_height="wrap_content"
             android:layout_below="@id/addressContainer"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="80dp"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -99,8 +105,8 @@
             android:id="@+id/forecastContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@id/detailsContainer"
-            android:layout_marginBottom="40dp"
+            android:layout_below="@id/currTempContainer"
+            android:layout_marginTop="160dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -160,7 +166,8 @@
             android:id="@+id/detailsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@id/forecastContainer"
+            android:layout_marginTop="40dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -402,5 +409,7 @@
         </LinearLayout>
 
     </RelativeLayout>
+
+    </ScrollView>
 
 </layout>
