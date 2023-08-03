@@ -1,13 +1,15 @@
 package com.example.aplikacijazaprognozuvremena
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.aplikacijazaprognozuvremena.databinding.ActivityMainBinding
 import com.example.aplikacijazaprognozuvremena.databinding.ActivitySplashScreenBinding
 
+@SuppressLint("StaticFieldLeak")
 private lateinit var binding: ActivitySplashScreenBinding
 
+@SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -9,8 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +17,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class City(val name: String, val country: String) : Parcelable
 
-class SearchFragment() : Fragment() {
+class SearchFragment : Fragment() {
     private lateinit var searchEditText: EditText
     private lateinit var citiesRecyclerView: RecyclerView
     private val cities = listOf(
@@ -56,18 +54,18 @@ class SearchFragment() : Fragment() {
         City("Rome", "it"),
         City("San Marino", "sm"),
         City("Sarajevo", "ba"),
-        City("Skopje","mk"),
-        City("Sofia","bg"),
-        City("Stockholm","se"),
-        City("Tallinn","ee"),
-        City("Tirana","al"),
-        City("Vaduz","li"),
-        City("Valletta","mt"),
+        City("Skopje", "mk"),
+        City("Sofia", "bg"),
+        City("Stockholm", "se"),
+        City("Tallinn", "ee"),
+        City("Tirana", "al"),
+        City("Vaduz", "li"),
+        City("Valletta", "mt"),
         City("Vatican City", "va"),
         City("Vienna", "at"),
-        City("Vilnius","lt"),
+        City("Vilnius", "lt"),
         City("Zagreb", "hr"),
-        City("Warsaw","pl")
+        City("Warsaw", "pl")
     )
 
     interface onCitySelectedListener {
@@ -107,7 +105,9 @@ class SearchFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val homeFragment = findNavController().previousBackStackEntry?.destination?.id?.let { parentFragmentManager.findFragmentById(it) } as? SearchFragment.onCitySelectedListener
+        val homeFragment = findNavController().previousBackStackEntry?.destination?.id?.let {
+            parentFragmentManager.findFragmentById(it)
+        } as? onCitySelectedListener
         (citiesRecyclerView.adapter as? SearchAdapter)?.onCitySelectedListener = homeFragment
     }
 }

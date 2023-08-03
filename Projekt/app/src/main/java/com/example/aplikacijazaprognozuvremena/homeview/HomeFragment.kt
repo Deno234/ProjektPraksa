@@ -8,9 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.aplikacijazaprognozuvremena.City
 import com.example.aplikacijazaprognozuvremena.R
@@ -18,14 +16,14 @@ import com.example.aplikacijazaprognozuvremena.SearchFragment
 import com.example.aplikacijazaprognozuvremena.SharedViewModel
 import com.example.aplikacijazaprognozuvremena.databinding.HomeFragmentBinding
 
-class HomeFragment() : Fragment(), SearchFragment.onCitySelectedListener {
+class HomeFragment : Fragment(), SearchFragment.onCitySelectedListener {
 
     private val viewModel: HomeFragmentModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = HomeFragmentBinding.inflate(inflater)
 
         binding.lifecycleOwner = this
@@ -52,13 +50,12 @@ class HomeFragment() : Fragment(), SearchFragment.onCitySelectedListener {
 
         val sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         sharedViewModel.selectedCity.observe(viewLifecycleOwner)
-            { city ->
-                val cityNameTextView: TextView = view.findViewById(R.id.address)
-                cityNameTextView.text = city.name
+        { city ->
+            locationTextView.text = city.name
 
-                viewModel.getWeatherData(city.name)
-                Log.d("HomeFragment", "selected City observe")
-            }
+            viewModel.getWeatherData(city.name)
+            Log.d("HomeFragment", "selected City observe")
+        }
     }
 
 

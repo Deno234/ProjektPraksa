@@ -1,27 +1,29 @@
 package com.example.aplikacijazaprognozuvremena
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.findFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 
-class SearchAdapter(private var data: List<City>, private val searchFragment: SearchFragment, private val navController: NavController) : RecyclerView.Adapter<SearchAdapter.MyViewHolder>() {
+class SearchAdapter(
+    private var data: List<City>,
+    private val searchFragment: SearchFragment,
+    private val navController: NavController
+) : RecyclerView.Adapter<SearchAdapter.MyViewHolder>() {
     var onCitySelectedListener: SearchFragment.onCitySelectedListener? = null
+
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView: TextView = itemView.findViewById(R.id.city_name_text_view)
 
         init {
             itemView.setOnClickListener {
                 val city = data[adapterPosition]
-                val sharedViewModel = ViewModelProvider(searchFragment.requireActivity()).get(SharedViewModel::class.java)
+                val sharedViewModel =
+                    ViewModelProvider(searchFragment.requireActivity()).get(SharedViewModel::class.java)
                 sharedViewModel.setSelectedCity(city)
                 navController.popBackStack()
             }
@@ -42,6 +44,7 @@ class SearchAdapter(private var data: List<City>, private val searchFragment: Se
         return data.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun submitList(newData: List<City>) {
         data = newData
         notifyDataSetChanged()

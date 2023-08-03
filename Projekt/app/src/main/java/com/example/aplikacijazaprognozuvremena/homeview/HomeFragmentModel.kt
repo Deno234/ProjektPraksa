@@ -1,8 +1,6 @@
 package com.example.aplikacijazaprognozuvremena.homeview
 
-import android.media.Image
 import android.util.Log
-import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,9 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.aplikacijazaprognozuvremena.R
 import com.example.aplikacijazaprognozuvremena.network.WeatherData
 import kotlinx.coroutines.launch
-import java.lang.Math.round
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.roundToInt
 
 enum class WeatherApiStatus { LOADING, ERROR, DONE }
 
@@ -22,7 +20,7 @@ class HomeFragmentModel : ViewModel() {
     private val _weatherData = MutableLiveData<WeatherData?>()
 
     val weatherData: MutableLiveData<WeatherData?> = _weatherData
-    val status: LiveData<WeatherApiStatus> = _status
+    //val status: LiveData<WeatherApiStatus> = _status
 
     private val _formattedSunrise = MutableLiveData<String>()
     val formattedSunrise: LiveData<String> = _formattedSunrise
@@ -49,7 +47,6 @@ class HomeFragmentModel : ViewModel() {
     val todayMaxTemp: LiveData<String> = _todayMaxTemp
 
     private val _todayMinTemp = MutableLiveData<String>()
-    val todayMinTemp: LiveData<String> = _todayMinTemp
 
     private val _currentDateTime = MutableLiveData<String>()
     val currentDateTime: LiveData<String> = _currentDateTime
@@ -64,7 +61,7 @@ class HomeFragmentModel : ViewModel() {
     val weatherImageResource: LiveData<Int> = _weatherImageResource
 
     init {
-        getWeatherData("London,uk")
+        getWeatherData("Zagreb,hr")
     }
 
     fun getWeatherData(city: String) {
@@ -95,16 +92,15 @@ class HomeFragmentModel : ViewModel() {
             _formattedPressure.value = "${data.main.pressure} hPa"
             _formattedWindSpeed.value = "${data.wind.speed} m/s"
             _currentTemperature.value =
-                round(kelvinToCelsius(data.main.temp)).toInt().toString() + " °C"
+                kelvinToCelsius(data.main.temp).roundToInt().toString() + " °C"
             _feelsLike.value =
-                round(kelvinToCelsius(data.main.feels_like)).toInt().toString() + " °C"
+                kelvinToCelsius(data.main.feels_like).roundToInt().toString() + " °C"
             _todayMaxTemp.value =
-                round(kelvinToCelsius(data.main.temp_max)).toInt().toString() + " °C"
+                kelvinToCelsius(data.main.temp_max).roundToInt().toString() + " °C"
             _todayMinTemp.value =
-                round(kelvinToCelsius(data.main.temp_min)).toInt().toString() + " °C"
+                kelvinToCelsius(data.main.temp_min).roundToInt().toString() + " °C"
             _todayMinMax.value = "${_todayMinTemp.value} /\n ${todayMaxTemp.value}  "
-            val weatherCondition = data.weather[0].main
-            val weatherImageResource = when (weatherCondition) {
+            val weatherImageResource = when (data.weather[0].main) {
                 "Clouds" -> R.drawable.cloudy
                 "Clear" -> R.drawable.sunny
                 "Rain" -> R.drawable.rainy
@@ -136,6 +132,7 @@ class HomeFragmentModel : ViewModel() {
             "Thunderstorm" -> "Grmljavina"
             "Snow" -> "Snijeg"
             "Fog" -> "Magla"
+            "Drizzle" -> "Sitna kiša"
             else -> weatherCondition
         }
     }
