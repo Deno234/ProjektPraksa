@@ -10,7 +10,7 @@
         android:id="@+id/search_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Search for a city"/>
+        android:hint="@string/odaberi_grad"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cities_recycler_view"
