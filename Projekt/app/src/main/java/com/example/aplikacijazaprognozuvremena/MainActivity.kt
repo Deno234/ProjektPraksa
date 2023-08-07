@@ -2,6 +2,9 @@ package com.example.aplikacijazaprognozuvremena
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 
@@ -17,5 +20,9 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
         navController = navHostFragment.navController
+
+        val rootView = findViewById<FragmentContainerView>(R.id.fragmentContainer)
+        val backgroundColor = getBackgroundColor()
+        rootView.setBackgroundResource(backgroundColor)
     }
 }

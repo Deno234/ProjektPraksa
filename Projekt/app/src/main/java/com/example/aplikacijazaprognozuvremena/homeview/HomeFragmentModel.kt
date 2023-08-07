@@ -101,11 +101,12 @@ class HomeFragmentModel : ViewModel() {
                 kelvinToCelsius(data.main.temp_min).roundToInt().toString() + " °C"
             _todayMinMax.value = "${_todayMinTemp.value} /\n ${todayMaxTemp.value}  "
             val weatherImageResource = when (data.weather[0].main) {
-                "Clouds" -> R.drawable.cloudy
+                "Clouds" -> R.drawable.clouds
                 "Clear" -> R.drawable.sunny
                 "Rain" -> R.drawable.rainy
                 "Snow" -> R.drawable.snowy
                 "Fog" -> R.drawable.foggy
+                "Drizzle" -> R.drawable.drizzle
                 else -> R.drawable.thunderstorm
             }
             _weatherImageResource.value = weatherImageResource

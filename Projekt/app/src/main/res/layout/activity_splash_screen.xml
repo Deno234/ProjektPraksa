@@ -18,7 +18,7 @@
             android:id="@+id/cloudySplashScreen"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:src="@drawable/cloudy" />
+            android:src="@drawable/clouds" />
 
         <ImageView
             android:id="@+id/rainySplashScreen"
