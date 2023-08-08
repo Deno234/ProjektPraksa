@@ -1,4 +1,4 @@
-package com.example.aplikacijazaprognozuvremena
+package com.example.aplikacijazaprognozuvremena.searchview
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.aplikacijazaprognozuvremena.R
+import com.example.aplikacijazaprognozuvremena.SharedViewModel
 
 class SearchAdapter(
     private var data: List<City>,

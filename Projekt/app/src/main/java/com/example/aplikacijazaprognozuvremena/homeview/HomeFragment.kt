@@ -7,18 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.aplikacijazaprognozuvremena.City
+import com.example.aplikacijazaprognozuvremena.searchview.City
 import com.example.aplikacijazaprognozuvremena.R
-import com.example.aplikacijazaprognozuvremena.SearchFragment
+import com.example.aplikacijazaprognozuvremena.searchview.SearchFragment
 import com.example.aplikacijazaprognozuvremena.SharedViewModel
 import com.example.aplikacijazaprognozuvremena.databinding.HomeFragmentBinding
 
 class HomeFragment : Fragment(), SearchFragment.onCitySelectedListener {
 
-    private val viewModel: HomeFragmentModel by viewModels()
+    private val viewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +34,6 @@ class HomeFragment : Fragment(), SearchFragment.onCitySelectedListener {
     }
 
     override fun onCitySelected(city: City) {
-        val viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         viewModel.selectedCity.value = city
         Log.d("HomeFragment", "onCitySelected")
     }
@@ -48,8 +46,7 @@ class HomeFragment : Fragment(), SearchFragment.onCitySelectedListener {
             findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
         }
 
-        val sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-        sharedViewModel.selectedCity.observe(viewLifecycleOwner)
+        viewModel.selectedCity.observe(viewLifecycleOwner)
         { city ->
             locationTextView.text = city.name
 

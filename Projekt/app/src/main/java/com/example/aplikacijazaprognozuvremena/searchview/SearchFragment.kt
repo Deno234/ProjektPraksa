@@ -1,4 +1,4 @@
-package com.example.aplikacijazaprognozuvremena
+package com.example.aplikacijazaprognozuvremena.searchview
 
 import android.os.Bundle
 import android.os.Parcelable
@@ -12,6 +12,7 @@ import android.widget.EditText
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.aplikacijazaprognozuvremena.R
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

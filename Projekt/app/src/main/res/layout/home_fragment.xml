@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.aplikacijazaprognozuvremena.homeview.HomeFragmentModel" />
+            type="com.example.aplikacijazaprognozuvremena.SharedViewModel" />
     </data>
 
     <ScrollView
