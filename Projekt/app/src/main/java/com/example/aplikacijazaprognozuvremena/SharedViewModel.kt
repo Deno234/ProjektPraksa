@@ -15,35 +15,41 @@ import java.util.*
 import kotlin.math.roundToInt
 
 enum class WeatherApiStatus { LOADING, ERROR, DONE }
-private const val stanje = "Učitava se..."
 
 class SharedViewModel(application: Application) : AndroidViewModel(application) {
 
+    private val sharedPreferences =
+        application.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+    private val selectedCityKey = "selected_city"
+    val selectedCity = MutableLiveData(
+        City(sharedPreferences.getString(selectedCityKey, "Zagreb")!!, "hr")
+    )
+
     private val _status = MutableLiveData<WeatherApiStatus>()
-    private val _weatherData = MutableLiveData<WeatherData?>()
+    val _weatherData = MutableLiveData<WeatherData?>()
 
     val weatherData: MutableLiveData<WeatherData?> = _weatherData
     //val status: LiveData<WeatherApiStatus> = _status
 
-    private val _formattedSunrise = MutableLiveData<String>()
+    val _formattedSunrise = MutableLiveData<String>()
     val formattedSunrise: LiveData<String> = _formattedSunrise
 
-    private val _formattedSunset = MutableLiveData<String>()
+    val _formattedSunset = MutableLiveData<String>()
     val formattedSunset: LiveData<String> = _formattedSunset
 
-    private val _formattedHumidity = MutableLiveData<String>()
+    val _formattedHumidity = MutableLiveData<String>()
     val formattedHumidity: LiveData<String> = _formattedHumidity
 
-    private val _formattedPressure = MutableLiveData<String>()
+    val _formattedPressure = MutableLiveData<String>()
     val formattedPressure: LiveData<String> = _formattedPressure
 
-    private val _formattedWindSpeed = MutableLiveData<String>()
+    val _formattedWindSpeed = MutableLiveData<String>()
     val formattedWindSpeed: LiveData<String> = _formattedWindSpeed
 
-    private val _currentTemperature = MutableLiveData<String>()
+    val _currentTemperature = MutableLiveData<String>()
     val currentTemperature: LiveData<String> = _currentTemperature
 
-    private val _feelsLike = MutableLiveData<String>()
+    val _feelsLike = MutableLiveData<String>()
     val feelsLike: LiveData<String> = _feelsLike
 
     private val _todayMaxTemp = MutableLiveData<String>()
@@ -51,20 +57,28 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
 
     private val _todayMinTemp = MutableLiveData<String>()
 
-    private val _currentDateTime = MutableLiveData<String>()
+    val _currentDateTime = MutableLiveData<String>()
     val currentDateTime: LiveData<String> = _currentDateTime
 
     private val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
     private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
 
-    private val _todayMinMax = MutableLiveData<String>()
+    val _todayMinMax = MutableLiveData<String>()
     val todayMinMax: LiveData<String> = _todayMinMax
 
-    private val _weatherImageResource = MutableLiveData<Int>()
+    val _weatherImageResource = MutableLiveData<Int>()
     val weatherImageResource: LiveData<Int> = _weatherImageResource
+    private val networkStatusMonitor = NetworkStatusMonitor(application, this)
+
 
     init {
         getWeatherData("Zagreb,hr")
+        networkStatusMonitor.startMonitoring()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        networkStatusMonitor.stopMonitoring()
     }
 
     fun getWeatherData(city: String) {
@@ -78,14 +92,14 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
             } catch (e: Exception) {
                 _status.value = WeatherApiStatus.ERROR
                 _weatherData.value = null
-                _currentDateTime.value = stanje
-                _formattedSunrise.value = stanje
-                _formattedSunset.value = stanje
-                _formattedHumidity.value = stanje
-                _formattedWindSpeed.value = stanje
+                _currentDateTime.value = Companion.stanje
+                _formattedSunrise.value = Companion.stanje
+                _formattedSunset.value = Companion.stanje
+                _formattedHumidity.value = Companion.stanje
+                _formattedWindSpeed.value = Companion.stanje
                 _currentTemperature.value = "..."
-                _formattedPressure.value = stanje
-                _feelsLike.value = stanje
+                _formattedPressure.value = Companion.stanje
+                _feelsLike.value = Companion.stanje
                 _todayMinMax.value = "..."
                 _weatherImageResource.value = R.drawable.unknown
                 Log.d("HomeFragmentModel", "weatherDataNULL: ${_weatherData.value}")
@@ -151,16 +165,13 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    private val sharedPreferences =
-        application.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
-    private val selectedCityKey = "selected_city"
-    val selectedCity = MutableLiveData(
-        City(sharedPreferences.getString(selectedCityKey, "Zagreb")!!, "hr")
-    )
-
     fun setSelectedCity(city: City) {
         selectedCity.value = city
         sharedPreferences.edit().putString(selectedCityKey, city.name).apply()
+    }
+
+    companion object {
+        const val stanje = "Učitava se..."
     }
 }
 
