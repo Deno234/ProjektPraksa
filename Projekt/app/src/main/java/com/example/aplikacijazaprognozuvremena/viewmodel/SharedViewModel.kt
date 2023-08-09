@@ -1,4 +1,4 @@
-package com.example.aplikacijazaprognozuvremena
+package com.example.aplikacijazaprognozuvremena.viewmodel
 
 import android.app.Application
 import android.content.Context
@@ -7,8 +7,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.aplikacijazaprognozuvremena.R
 import com.example.aplikacijazaprognozuvremena.searchview.City
 import com.example.aplikacijazaprognozuvremena.network.WeatherData
+import com.example.aplikacijazaprognozuvremena.networkstatus.NetworkStatusMonitor
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -17,6 +19,10 @@ import kotlin.math.roundToInt
 enum class WeatherApiStatus { LOADING, ERROR, DONE }
 
 class SharedViewModel(application: Application) : AndroidViewModel(application) {
+
+    companion object {
+        const val stanje = "Učitava se..."
+    }
 
     private val sharedPreferences =
         application.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
@@ -28,8 +34,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     private val _status = MutableLiveData<WeatherApiStatus>()
     val _weatherData = MutableLiveData<WeatherData?>()
 
-    val weatherData: MutableLiveData<WeatherData?> = _weatherData
-    //val status: LiveData<WeatherApiStatus> = _status
+    private val weatherData: MutableLiveData<WeatherData?> = _weatherData
 
     val _formattedSunrise = MutableLiveData<String>()
     val formattedSunrise: LiveData<String> = _formattedSunrise
@@ -53,7 +58,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val feelsLike: LiveData<String> = _feelsLike
 
     private val _todayMaxTemp = MutableLiveData<String>()
-    val todayMaxTemp: LiveData<String> = _todayMaxTemp
+    private val todayMaxTemp: LiveData<String> = _todayMaxTemp
 
     private val _todayMinTemp = MutableLiveData<String>()
 
@@ -92,14 +97,14 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
             } catch (e: Exception) {
                 _status.value = WeatherApiStatus.ERROR
                 _weatherData.value = null
-                _currentDateTime.value = Companion.stanje
-                _formattedSunrise.value = Companion.stanje
-                _formattedSunset.value = Companion.stanje
-                _formattedHumidity.value = Companion.stanje
-                _formattedWindSpeed.value = Companion.stanje
+                _currentDateTime.value = stanje
+                _formattedSunrise.value = stanje
+                _formattedSunset.value = stanje
+                _formattedHumidity.value = stanje
+                _formattedWindSpeed.value = stanje
                 _currentTemperature.value = "..."
-                _formattedPressure.value = Companion.stanje
-                _feelsLike.value = Companion.stanje
+                _formattedPressure.value = stanje
+                _feelsLike.value = stanje
                 _todayMinMax.value = "..."
                 _weatherImageResource.value = R.drawable.unknown
                 Log.d("HomeFragmentModel", "weatherDataNULL: ${_weatherData.value}")
@@ -168,10 +173,6 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     fun setSelectedCity(city: City) {
         selectedCity.value = city
         sharedPreferences.edit().putString(selectedCityKey, city.name).apply()
-    }
-
-    companion object {
-        const val stanje = "Učitava se..."
     }
 }
 

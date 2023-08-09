@@ -1,4 +1,4 @@
-package com.example.aplikacijazaprognozuvremena.homeview
+package com.example.aplikacijazaprognozuvremena.activities
 
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.aplikacijazaprognozuvremena.searchview.City
 import com.example.aplikacijazaprognozuvremena.R
 import com.example.aplikacijazaprognozuvremena.searchview.SearchFragment
-import com.example.aplikacijazaprognozuvremena.SharedViewModel
+import com.example.aplikacijazaprognozuvremena.viewmodel.SharedViewModel
 import com.example.aplikacijazaprognozuvremena.databinding.HomeFragmentBinding
 
 class HomeFragment : Fragment(), SearchFragment.onCitySelectedListener {

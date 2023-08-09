@@ -1,4 +1,4 @@
-package com.example.aplikacijazaprognozuvremena
+package com.example.aplikacijazaprognozuvremena.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
