@@ -15,6 +15,7 @@ import java.util.*
 import kotlin.math.roundToInt
 
 enum class WeatherApiStatus { LOADING, ERROR, DONE }
+private const val stanje = "Učitava se..."
 
 class SharedViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -77,6 +78,16 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
             } catch (e: Exception) {
                 _status.value = WeatherApiStatus.ERROR
                 _weatherData.value = null
+                _currentDateTime.value = stanje
+                _formattedSunrise.value = stanje
+                _formattedSunset.value = stanje
+                _formattedHumidity.value = stanje
+                _formattedWindSpeed.value = stanje
+                _currentTemperature.value = "..."
+                _formattedPressure.value = stanje
+                _feelsLike.value = stanje
+                _todayMinMax.value = "..."
+                _weatherImageResource.value = R.drawable.unknown
                 Log.d("HomeFragmentModel", "weatherDataNULL: ${_weatherData.value}")
                 Log.e("HomeFragmentModel", "$e")
                 clearProperties()
