@@ -114,17 +114,18 @@
             android:layout_marginTop="160dp"
             android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/dayToday"
-                    android:layout_width="70dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="20dp"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/black"
-                    android:text="@string/danas"
-                    android:textSize="20sp">
+            <TextView
+                android:id="@+id/dayToday"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:gravity="center_vertical"
+                android:text="@string/danas"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                tools:ignore="TextSizeCheck">
 
-                </TextView>
+            </TextView>
 
                 <LinearLayout
                     android:id="@+id/forecastTodayCenterContainer"
@@ -138,27 +139,27 @@
                         android:id="@+id/today_image"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:contentDescription="TODO"
                         android:background="@android:color/transparent"
+                        android:contentDescription="@{viewModel.translateWeatherCondition(viewModel.weatherDataValue.weather[0].main)"
                         android:src="@{viewModel.weatherImageResource}"
-                        tools:src="@drawable/sunny">
-                    </ImageView>
+                        tools:ignore="ImageContrastCheck"
+                        tools:src="@drawable/sunny" />
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/today_minmax"
-                    android:layout_width="70dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="20dp"
-                    android:textColor="@color/black"
-                    android:gravity="right|center_vertical"
-                    android:text="@{viewModel.todayMinMax}"
-                    android:textSize="20sp"
-                    tools:ignore="RtlHardcoded"
-                    tools:text="Min/Maks">
+            <TextView
+                android:id="@+id/today_minmax"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="20dp"
+                android:gravity="right|center_vertical"
+                android:text="@{viewModel.todayMinMax}"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                tools:ignore="RtlHardcoded,TextSizeCheck"
+                tools:text="Min/Maks">
 
-                </TextView>
+            </TextView>
 
             </LinearLayout>
 
@@ -193,7 +194,8 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/sunrise" />
+                        android:src="@drawable/sunrise"
+                        android:importantForAccessibility="no" />
 
                     <Space
                         android:layout_width="5dp"
@@ -231,7 +233,8 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/sunset" />
+                        android:src="@drawable/sunset"
+                        android:importantForAccessibility="no" />
 
                     <Space
                         android:layout_width="5dp"
@@ -269,7 +272,8 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/wind" />
+                        android:src="@drawable/wind"
+                        android:importantForAccessibility="no" />
 
                     <Space
                         android:layout_width="5dp"
@@ -324,7 +328,8 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/pressure" />
+                        android:src="@drawable/pressure"
+                        android:importantForAccessibility="no" />
 
                     <Space
                         android:layout_width="5dp"
@@ -362,7 +367,8 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/humidity" />
+                        android:src="@drawable/humidity"
+                        android:importantForAccessibility="no" />
 
                     <Space
                         android:layout_width="5dp"
@@ -400,7 +406,8 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/info" />
+                        android:src="@drawable/info"
+                        android:importantForAccessibility="no" />
 
                     <Space
                         android:layout_width="5dp"

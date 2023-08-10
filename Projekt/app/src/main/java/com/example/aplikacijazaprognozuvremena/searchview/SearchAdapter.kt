@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aplikacijazaprognozuvremena.R
+import com.example.aplikacijazaprognozuvremena.activities.City
+import com.example.aplikacijazaprognozuvremena.activities.SearchFragment
 import com.example.aplikacijazaprognozuvremena.viewmodel.SharedViewModel
 
 class SearchAdapter(

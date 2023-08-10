@@ -15,6 +15,6 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.aplikacijazaprognozuvremena.searchview.SearchFragment"
+        android:name="com.example.aplikacijazaprognozuvremena.activities.SearchFragment"
         tools:layout="@layout/fragment_search" />
 </navigation>

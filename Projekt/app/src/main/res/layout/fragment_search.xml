@@ -4,13 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".searchview.SearchFragment">
+    tools:context=".activities.SearchFragment">
 
     <EditText
         android:id="@+id/search_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/odaberi_grad"/>
+        android:hint="@string/odaberi_grad"
+        android:inputType="text"
+        android:textColorHint="#8D6E63"
+        tools:ignore="VisualLintTextFieldSize"
+        android:importantForAutofill="no" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cities_recycler_view"

@@ -9,9 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.aplikacijazaprognozuvremena.searchview.City
 import com.example.aplikacijazaprognozuvremena.R
-import com.example.aplikacijazaprognozuvremena.searchview.SearchFragment
 import com.example.aplikacijazaprognozuvremena.viewmodel.SharedViewModel
 import com.example.aplikacijazaprognozuvremena.databinding.HomeFragmentBinding
 

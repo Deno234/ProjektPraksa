@@ -1,4 +1,4 @@
-package com.example.aplikacijazaprognozuvremena.network
+package com.example.aplikacijazaprognozuvremena.network.dataclasses
 
 data class Main (
     val temp: Double,

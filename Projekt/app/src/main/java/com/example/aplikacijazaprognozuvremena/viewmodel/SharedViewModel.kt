@@ -8,20 +8,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.aplikacijazaprognozuvremena.R
-import com.example.aplikacijazaprognozuvremena.searchview.City
-import com.example.aplikacijazaprognozuvremena.network.WeatherData
+import com.example.aplikacijazaprognozuvremena.activities.City
+import com.example.aplikacijazaprognozuvremena.network.dataclasses.WeatherData
 import com.example.aplikacijazaprognozuvremena.networkstatus.NetworkStatusMonitor
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
 
-enum class WeatherApiStatus { LOADING, ERROR, DONE }
-
 class SharedViewModel(application: Application) : AndroidViewModel(application) {
 
     companion object {
-        const val stanje = "Učitava se..."
+        const val stanje1 = "Učitava se..."
+        const val stanje2 = "..."
     }
 
     private val sharedPreferences =
@@ -31,7 +30,6 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         City(sharedPreferences.getString(selectedCityKey, "Zagreb")!!, "hr")
     )
 
-    private val _status = MutableLiveData<WeatherApiStatus>()
     val _weatherData = MutableLiveData<WeatherData?>()
 
     private val weatherData: MutableLiveData<WeatherData?> = _weatherData
@@ -88,24 +86,21 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
 
     fun getWeatherData(city: String) {
         viewModelScope.launch {
-            _status.value = WeatherApiStatus.LOADING
             try {
                 _weatherData.value = WeatherApi.retrofitService.getWeather(city)
                 Log.d("HomeFragmentModel", "weatherData: ${_weatherData.value}")
-                _status.value = WeatherApiStatus.DONE
                 updateProperties()
             } catch (e: Exception) {
-                _status.value = WeatherApiStatus.ERROR
                 _weatherData.value = null
-                _currentDateTime.value = stanje
-                _formattedSunrise.value = stanje
-                _formattedSunset.value = stanje
-                _formattedHumidity.value = stanje
-                _formattedWindSpeed.value = stanje
-                _currentTemperature.value = "..."
-                _formattedPressure.value = stanje
-                _feelsLike.value = stanje
-                _todayMinMax.value = "..."
+                _currentDateTime.value = stanje1
+                _formattedSunrise.value = stanje1
+                _formattedSunset.value = stanje1
+                _formattedHumidity.value = stanje1
+                _formattedWindSpeed.value = stanje1
+                _currentTemperature.value = stanje2
+                _formattedPressure.value = stanje1
+                _feelsLike.value = stanje1
+                _todayMinMax.value = stanje2
                 _weatherImageResource.value = R.drawable.unknown
                 Log.d("HomeFragmentModel", "weatherDataNULL: ${_weatherData.value}")
                 Log.e("HomeFragmentModel", "$e")
@@ -116,7 +111,9 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
 
     private fun updateProperties() {
         weatherData.value?.let { data ->
+
             val kelvinToCelsius = { kelvin: Double -> kelvin - 273.15 }
+
             _currentDateTime.value = dateFormat.format(Date())
             _formattedSunrise.value = timeFormat.format(Date(data.sys.sunrise * 1000))
             _formattedSunset.value = timeFormat.format(Date(data.sys.sunset * 1000))
@@ -132,6 +129,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
             _todayMinTemp.value =
                 kelvinToCelsius(data.main.temp_min).roundToInt().toString() + " °C"
             _todayMinMax.value = "${_todayMinTemp.value} /\n ${todayMaxTemp.value}  "
+
             val weatherImageResource = when (data.weather[0].main) {
                 "Clouds" -> R.drawable.clouds
                 "Clear" -> R.drawable.sunny
@@ -141,6 +139,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 "Drizzle" -> R.drawable.drizzle
                 else -> R.drawable.thunderstorm
             }
+
             _weatherImageResource.value = weatherImageResource
         }
     }

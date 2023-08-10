@@ -1,4 +1,4 @@
-package com.example.aplikacijazaprognozuvremena.network
+package com.example.aplikacijazaprognozuvremena.network.dataclasses
 
 data class WeatherData (
     val coord: Coord,

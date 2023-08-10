@@ -1,4 +1,4 @@
-import com.example.aplikacijazaprognozuvremena.network.WeatherData
+import com.example.aplikacijazaprognozuvremena.network.dataclasses.WeatherData
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit

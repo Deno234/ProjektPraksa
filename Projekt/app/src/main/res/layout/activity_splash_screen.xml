@@ -12,18 +12,22 @@
             android:id="@+id/sunnySplashScreen"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:src="@drawable/sunny" />
+            android:src="@drawable/sunny"
+            tools:ignore="ImageContrastCheck"
+            android:importantForAccessibility="no" />
 
         <ImageView
             android:id="@+id/cloudySplashScreen"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:src="@drawable/clouds" />
+            android:src="@drawable/clouds"
+            android:importantForAccessibility="no" />
 
         <ImageView
             android:id="@+id/rainySplashScreen"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:src="@drawable/rainy" />
+            android:src="@drawable/rainy"
+            android:importantForAccessibility="no" />
 
 </LinearLayout>

@@ -17,16 +17,16 @@ class NetworkStatusMonitor(context: Context, private val viewModel: SharedViewMo
 
         override fun onLost(network: Network) {
             viewModel._weatherData.postValue(null)
-            viewModel._currentDateTime.postValue(SharedViewModel.stanje)
-            viewModel._formattedSunrise.postValue(SharedViewModel.stanje)
-            viewModel._formattedSunset.postValue(SharedViewModel.stanje)
-            viewModel._formattedHumidity.postValue(SharedViewModel.stanje)
-            viewModel._formattedWindSpeed.postValue(SharedViewModel.stanje)
-            viewModel._formattedPressure.postValue(SharedViewModel.stanje)
-            viewModel._feelsLike.postValue(SharedViewModel.stanje)
-            viewModel._todayMinMax.postValue("...")
+            viewModel._currentDateTime.postValue(SharedViewModel.stanje1)
+            viewModel._formattedSunrise.postValue(SharedViewModel.stanje1)
+            viewModel._formattedSunset.postValue(SharedViewModel.stanje1)
+            viewModel._formattedHumidity.postValue(SharedViewModel.stanje1)
+            viewModel._formattedWindSpeed.postValue(SharedViewModel.stanje1)
+            viewModel._formattedPressure.postValue(SharedViewModel.stanje1)
+            viewModel._feelsLike.postValue(SharedViewModel.stanje1)
+            viewModel._todayMinMax.postValue(SharedViewModel.stanje2)
             viewModel._weatherImageResource.postValue(R.drawable.unknown)
-            viewModel._currentTemperature.postValue("...")
+            viewModel._currentTemperature.postValue(SharedViewModel.stanje2)
         }
     }
 

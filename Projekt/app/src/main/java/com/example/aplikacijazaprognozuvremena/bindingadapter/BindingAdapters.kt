@@ -1,4 +1,4 @@
-package com.example.aplikacijazaprognozuvremena
+package com.example.aplikacijazaprognozuvremena.bindingadapter
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
