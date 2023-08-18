@@ -5,14 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aplikacijazaprognozuvremena.R
 import com.example.aplikacijazaprognozuvremena.activities.City
 import com.example.aplikacijazaprognozuvremena.activities.OnCitySelectedListener
-import com.example.aplikacijazaprognozuvremena.activities.SearchFragment
-import com.example.aplikacijazaprognozuvremena.viewmodel.SharedViewModel
 
 class SearchAdapter(
     private var data: List<City>,

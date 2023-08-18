@@ -2,10 +2,8 @@ package com.example.aplikacijazaprognozuvremena.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.example.aplikacijazaprognozuvremena.R
 import com.example.aplikacijazaprognozuvremena.databinding.ActivityMainBinding
 import com.example.aplikacijazaprognozuvremena.getBackgroundColor
 
