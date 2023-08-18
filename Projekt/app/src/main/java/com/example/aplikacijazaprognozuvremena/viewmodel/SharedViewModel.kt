@@ -132,7 +132,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
             _todayMinTemp.value =
                 kelvinToCelsius(data.main.temp_min).roundToInt().toString() + " °C"
             _todayMinMax.value = "${_todayMinTemp.value} /\n ${todayMaxTemp.value}  "
-            _weatherImageResource.value = getImageResource(data.weather[0].main)
+            _weatherImageResource.value = getWeatherImageResource(data.weather[0].main)
         }
     }
 
@@ -145,7 +145,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         return weatherData
     }
 
-    private fun getImageResource(status: String): Int {
+    private fun getWeatherImageResource(status: String): Int {
         return when (status) {
             "Clouds" -> R.drawable.clouds
             "Clear" -> R.drawable.sunny

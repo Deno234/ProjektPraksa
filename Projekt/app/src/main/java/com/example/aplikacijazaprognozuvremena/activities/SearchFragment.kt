@@ -29,6 +29,7 @@ data class City(val name: String, val country: String) : Parcelable
 @SuppressLint("StaticFieldLeak")
 private lateinit var binding: FragmentSearchBinding
 
+
 interface OnCitySelectedListener {
     fun onCitySelected(city: City)
 }
@@ -39,8 +40,10 @@ class SearchFragment : Fragment(), OnCitySelectedListener {
     private val cityList = cities
     private val viewModel: SharedViewModel by activityViewModels()
 
+
     override fun onCitySelected(city: City) {
         viewModel.selectedCity.value = city
+        viewModel.setSelectedCity(city)
         findNavController().popBackStack()
     }
 
