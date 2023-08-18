@@ -1,5 +1,6 @@
-package com.example.aplikacijazaprognozuvremena
+package com.example.aplikacijazaprognozuvremena.publicfunctions
 
+import com.example.aplikacijazaprognozuvremena.R
 import java.util.Calendar
 
 fun getBackgroundColor(): Int {

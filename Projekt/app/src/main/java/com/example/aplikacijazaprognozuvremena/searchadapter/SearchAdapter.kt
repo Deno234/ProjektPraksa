@@ -1,4 +1,4 @@
-package com.example.aplikacijazaprognozuvremena.searchview
+package com.example.aplikacijazaprognozuvremena.searchadapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

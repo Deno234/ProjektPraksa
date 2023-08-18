@@ -15,10 +15,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.aplikacijazaprognozuvremena.Cities.cities
+import com.example.aplikacijazaprognozuvremena.publicdata.Cities.cities
 import com.example.aplikacijazaprognozuvremena.R
 import com.example.aplikacijazaprognozuvremena.databinding.FragmentSearchBinding
-import com.example.aplikacijazaprognozuvremena.searchview.SearchAdapter
+import com.example.aplikacijazaprognozuvremena.searchadapter.SearchAdapter
 import com.example.aplikacijazaprognozuvremena.viewmodel.SharedViewModel
 import kotlinx.parcelize.Parcelize
 

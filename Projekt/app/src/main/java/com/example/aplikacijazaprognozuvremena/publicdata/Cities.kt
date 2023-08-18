@@ -1,4 +1,4 @@
-package com.example.aplikacijazaprognozuvremena
+package com.example.aplikacijazaprognozuvremena.publicdata
 
 import com.example.aplikacijazaprognozuvremena.activities.City
 

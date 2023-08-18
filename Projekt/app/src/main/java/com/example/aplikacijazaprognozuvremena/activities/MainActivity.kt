@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.aplikacijazaprognozuvremena.databinding.ActivityMainBinding
-import com.example.aplikacijazaprognozuvremena.getBackgroundColor
+import com.example.aplikacijazaprognozuvremena.publicfunctions.getBackgroundColor
 
 private lateinit var binding: ActivityMainBinding
 
