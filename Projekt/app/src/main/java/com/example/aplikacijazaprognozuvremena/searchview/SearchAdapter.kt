@@ -10,15 +10,14 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aplikacijazaprognozuvremena.R
 import com.example.aplikacijazaprognozuvremena.activities.City
+import com.example.aplikacijazaprognozuvremena.activities.OnCitySelectedListener
 import com.example.aplikacijazaprognozuvremena.activities.SearchFragment
 import com.example.aplikacijazaprognozuvremena.viewmodel.SharedViewModel
 
 class SearchAdapter(
     private var data: List<City>,
-    private val searchFragment: SearchFragment,
-    private val navController: NavController
+    private val listener: OnCitySelectedListener
 ) : RecyclerView.Adapter<SearchAdapter.MyViewHolder>() {
-    var onCitySelectedListener: SearchFragment.onCitySelectedListener? = null
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView: TextView = itemView.findViewById(R.id.city_name_text_view)
@@ -26,10 +25,7 @@ class SearchAdapter(
         init {
             itemView.setOnClickListener {
                 val city = data[adapterPosition]
-                val sharedViewModel =
-                    ViewModelProvider(searchFragment.requireActivity()).get(SharedViewModel::class.java)
-                sharedViewModel.setSelectedCity(city)
-                navController.popBackStack()
+                listener.onCitySelected(city)
             }
         }
     }

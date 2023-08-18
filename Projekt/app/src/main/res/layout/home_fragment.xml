@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:text="@{viewModel.translateWeatherCondition(viewModel.weatherDataValue.weather[0].main)}"
+                android:text="@{viewModel.status}"
                 android:textSize="18sp"
                 tools:text="Cloudy" />
 

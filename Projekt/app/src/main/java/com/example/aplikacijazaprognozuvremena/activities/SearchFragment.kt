@@ -1,5 +1,6 @@
 package com.example.aplikacijazaprognozuvremena.activities
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Parcelable
 import android.text.Editable
@@ -10,82 +11,50 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.activity.addCallback
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.aplikacijazaprognozuvremena.Cities.cities
 import com.example.aplikacijazaprognozuvremena.R
+import com.example.aplikacijazaprognozuvremena.databinding.FragmentSearchBinding
 import com.example.aplikacijazaprognozuvremena.searchview.SearchAdapter
+import com.example.aplikacijazaprognozuvremena.viewmodel.SharedViewModel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class City(val name: String, val country: String) : Parcelable
 
-class SearchFragment : Fragment() {
+
+@SuppressLint("StaticFieldLeak")
+private lateinit var binding: FragmentSearchBinding
+
+interface OnCitySelectedListener {
+    fun onCitySelected(city: City)
+}
+
+class SearchFragment : Fragment(), OnCitySelectedListener {
     private lateinit var searchEditText: EditText
     private lateinit var citiesRecyclerView: RecyclerView
-    private val cities = listOf(
-        City("Amsterdam", "nl"),
-        City("Andorra la Vella", "ad"),
-        City("Athens", "gr"),
-        City("Belgrade", "rs"),
-        City("Berlin", "de"),
-        City("Bern", "ch"),
-        City("Bratislava", "sk"),
-        City("Brussels", "be"),
-        City("Bucharest", "ro"),
-        City("Budapest", "hu"),
-        City("Chisinau", "md"),
-        City("Copenhagen", "dk"),
-        City("Dublin", "ie"),
-        City("Helsinki", "fi"),
-        City("Lisbon", "pt"),
-        City("Ljubljana", "si"),
-        City("London", "uk"),
-        City("Luxembourg", "lu"),
-        City("Madrid", "es"),
-        City("Minsk", "by"),
-        City("Monaco", "mc"),
-        City("Moscow", "ru"),
-        City("Nicosia", "cy"),
-        City("Oslo", "no"),
-        City("Paris", "fr"),
-        City("Podgorica", "me"),
-        City("Prague", "cz"),
-        City("Pristina", "xk"),
-        City("Reykjavik", "is"),
-        City("Riga", "lv"),
-        City("Rome", "it"),
-        City("San Marino", "sm"),
-        City("Sarajevo", "ba"),
-        City("Skopje", "mk"),
-        City("Sofia", "bg"),
-        City("Stockholm", "se"),
-        City("Tallinn", "ee"),
-        City("Tirana", "al"),
-        City("Vaduz", "li"),
-        City("Valletta", "mt"),
-        City("Vatican City", "va"),
-        City("Vienna", "at"),
-        City("Vilnius", "lt"),
-        City("Zagreb", "hr"),
-        City("Warsaw", "pl")
-    )
+    private val cityList = cities
+    private val viewModel: SharedViewModel by activityViewModels()
 
-    interface onCitySelectedListener {
-        fun onCitySelected(city: City)
+    override fun onCitySelected(city: City) {
+        viewModel.selectedCity.value = city
+        findNavController().popBackStack()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_search, container, false)
-        searchEditText = view.findViewById(R.id.search_edit_text)
-        citiesRecyclerView = view.findViewById(R.id.cities_recycler_view)
+    ): View {
+        binding = FragmentSearchBinding.inflate(inflater)
+        searchEditText = binding.searchEditText
+        citiesRecyclerView = binding.citiesRecyclerView
 
         citiesRecyclerView.layoutManager = LinearLayoutManager(context)
-
-        citiesRecyclerView.adapter = SearchAdapter(cities, this, findNavController())
+        val adapter = SearchAdapter(cityList, this)
+        citiesRecyclerView.adapter = adapter
 
         searchEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -93,17 +62,17 @@ class SearchFragment : Fragment() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val searchText = s.toString()
-                val filteredCities = cities.filter { city ->
+                val filteredCities = cityList.filter { city ->
                     city.name.contains(searchText, ignoreCase = true)
                 }
-                (citiesRecyclerView.adapter as SearchAdapter).submitList(filteredCities)
+                adapter.submitList(filteredCities)
             }
 
             override fun afterTextChanged(s: Editable?) {
             }
         })
 
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -112,9 +81,5 @@ class SearchFragment : Fragment() {
         val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             findNavController().navigate(R.id.homeFragment)
         }
-        val homeFragment = findNavController().previousBackStackEntry?.destination?.id?.let {
-            parentFragmentManager.findFragmentById(it)
-        } as? onCitySelectedListener
-        (citiesRecyclerView.adapter as? SearchAdapter)?.onCitySelectedListener = homeFragment
     }
 }

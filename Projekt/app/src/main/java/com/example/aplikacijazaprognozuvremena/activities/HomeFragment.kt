@@ -1,5 +1,6 @@
 package com.example.aplikacijazaprognozuvremena.activities
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,7 +14,10 @@ import com.example.aplikacijazaprognozuvremena.R
 import com.example.aplikacijazaprognozuvremena.viewmodel.SharedViewModel
 import com.example.aplikacijazaprognozuvremena.databinding.HomeFragmentBinding
 
-class HomeFragment : Fragment(), SearchFragment.onCitySelectedListener {
+@SuppressLint("StaticFieldLeak")
+private lateinit var binding: HomeFragmentBinding
+
+class HomeFragment : Fragment(), OnCitySelectedListener {
 
     private val viewModel: SharedViewModel by activityViewModels()
 
@@ -21,7 +25,7 @@ class HomeFragment : Fragment(), SearchFragment.onCitySelectedListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = HomeFragmentBinding.inflate(inflater)
+        binding = HomeFragmentBinding.inflate(inflater)
 
         binding.lifecycleOwner = this
 
@@ -39,7 +43,7 @@ class HomeFragment : Fragment(), SearchFragment.onCitySelectedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val locationTextView: TextView = view.findViewById(R.id.address)
+        val locationTextView: TextView = binding.address
         locationTextView.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
         }

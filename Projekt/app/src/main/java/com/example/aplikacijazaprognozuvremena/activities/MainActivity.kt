@@ -6,7 +6,10 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.aplikacijazaprognozuvremena.R
+import com.example.aplikacijazaprognozuvremena.databinding.ActivityMainBinding
 import com.example.aplikacijazaprognozuvremena.getBackgroundColor
+
+private lateinit var binding: ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,12 +17,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(binding.fragmentContainer.id) as NavHostFragment
         navController = navHostFragment.navController
 
-        val rootView = findViewById<FragmentContainerView>(R.id.fragmentContainer)
+        val rootView = binding.fragmentContainer
         val backgroundColor = getBackgroundColor()
         rootView.setBackgroundResource(backgroundColor)
     }

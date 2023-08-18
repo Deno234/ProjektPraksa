@@ -1,0 +1,53 @@
+package com.example.aplikacijazaprognozuvremena
+
+import com.example.aplikacijazaprognozuvremena.activities.City
+
+object Cities {
+    val cities = listOf(
+        City("Amsterdam", "nl"),
+        City("Andorra la Vella", "ad"),
+        City("Athens", "gr"),
+        City("Belgrade", "rs"),
+        City("Berlin", "de"),
+        City("Bern", "ch"),
+        City("Bratislava", "sk"),
+        City("Brussels", "be"),
+        City("Bucharest", "ro"),
+        City("Budapest", "hu"),
+        City("Chisinau", "md"),
+        City("Copenhagen", "dk"),
+        City("Dublin", "ie"),
+        City("Helsinki", "fi"),
+        City("Lisbon", "pt"),
+        City("Ljubljana", "si"),
+        City("London", "uk"),
+        City("Luxembourg", "lu"),
+        City("Madrid", "es"),
+        City("Minsk", "by"),
+        City("Monaco", "mc"),
+        City("Moscow", "ru"),
+        City("Nicosia", "cy"),
+        City("Oslo", "no"),
+        City("Paris", "fr"),
+        City("Podgorica", "me"),
+        City("Prague", "cz"),
+        City("Pristina", "xk"),
+        City("Reykjavik", "is"),
+        City("Riga", "lv"),
+        City("Rome", "it"),
+        City("San Marino", "sm"),
+        City("Sarajevo", "ba"),
+        City("Skopje", "mk"),
+        City("Sofia", "bg"),
+        City("Stockholm", "se"),
+        City("Tallinn", "ee"),
+        City("Tirana", "al"),
+        City("Vaduz", "li"),
+        City("Valletta", "mt"),
+        City("Vatican City", "va"),
+        City("Vienna", "at"),
+        City("Vilnius", "lt"),
+        City("Zagreb", "hr"),
+        City("Warsaw", "pl")
+    )
+}
