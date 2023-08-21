@@ -1,12 +1,10 @@
 package com.example.aplikacijazaprognozuvremena.activities
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -14,11 +12,9 @@ import com.example.aplikacijazaprognozuvremena.R
 import com.example.aplikacijazaprognozuvremena.viewmodel.SharedViewModel
 import com.example.aplikacijazaprognozuvremena.databinding.HomeFragmentBinding
 
-@SuppressLint("StaticFieldLeak")
-private lateinit var binding: HomeFragmentBinding
-
 class HomeFragment : Fragment(), OnCitySelectedListener {
 
+    private lateinit var binding: HomeFragmentBinding
     private val viewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -36,23 +32,22 @@ class HomeFragment : Fragment(), OnCitySelectedListener {
     }
 
     override fun onCitySelected(city: City) {
-        viewModel.selectedCity.value = city
+        viewModel.setSelectedCity(city)
         Log.d("HomeFragment", "onCitySelected")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val locationTextView: TextView = binding.address
-        locationTextView.setOnClickListener {
+        binding.address.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
         }
 
         viewModel.selectedCity.observe(viewLifecycleOwner)
         { city ->
-            locationTextView.text = city.name
+            binding.address.text = city.name
 
-            viewModel.getWeatherData(city.name)
+            viewModel.getWeatherData(city.name + "," + city.country)
             Log.d("HomeFragment", "selected City observe")
         }
     }

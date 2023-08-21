@@ -2,6 +2,8 @@ package com.example.aplikacijazaprognozuvremena.viewmodel
 
 import android.app.Application
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -11,7 +13,12 @@ import com.example.aplikacijazaprognozuvremena.R
 import com.example.aplikacijazaprognozuvremena.activities.City
 import com.example.aplikacijazaprognozuvremena.network.dataclasses.WeatherData
 import com.example.aplikacijazaprognozuvremena.networkstatus.NetworkStatusMonitor
+import com.example.aplikacijazaprognozuvremena.publicdata.WeatherImage.WEATHER_IMAGE_RESOURCES
+import com.example.aplikacijazaprognozuvremena.publicdata.WeatherTranslation.WEATHER_TRANSLATIONS
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Runnable
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
@@ -26,9 +33,14 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     private val sharedPreferences =
         application.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
     private val selectedCityKey = "selected_city"
-    val selectedCity = MutableLiveData(
-        City(sharedPreferences.getString(selectedCityKey, "Zagreb")!!, "hr")
+    private val selectedCityCountry = "selected_country"
+    private val _selectedCity = MutableLiveData(
+        City(
+            sharedPreferences.getString(selectedCityKey, "Zagreb")!!,
+            sharedPreferences.getString(selectedCityCountry, "hr")!!
+        )
     )
+    val selectedCity: LiveData<City> = _selectedCity
 
     private val _weatherData = MutableLiveData<WeatherData?>()
 
@@ -77,37 +89,58 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     private val _status = MutableLiveData<String>()
     val status: LiveData<String> = _status
 
+    private val handler = Handler(Looper.getMainLooper())
+    private val runnable = object : Runnable {
+        override fun run() {
+            _selectedCity.value?.let {
+                getWeatherData(it.name + "," + it.country)
+            }
+            handler.postDelayed(this, 30 * 60 * 1000) //svakih 30 minuta
+        }
+    }
+
+
     init {
-        getWeatherData("Zagreb,hr")
+        _selectedCity.value?.let {
+            getWeatherData(it.name + "," + it.country)
+        }
         networkStatusMonitor.startMonitoring()
+        handler.post(runnable)
     }
 
     override fun onCleared() {
         super.onCleared()
+        handler.removeCallbacks(runnable)
         networkStatusMonitor.stopMonitoring()
     }
 
     fun getWeatherData(city: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
-                _weatherData.value = WeatherApi.retrofitService.getWeather(city)
-                Log.d("HomeFragmentModel", "weatherData: ${_weatherData.value}")
-                updateProperties()
+                val weatherData2 = WeatherApi.retrofitService.getWeather(city)
+                withContext(Dispatchers.Main) {
+                    _weatherData.value = weatherData2
+                    Log.d("HomeFragmentModel", "weatherData: ${_weatherData.value}")
+                    updateProperties()
+                }
             } catch (e: Exception) {
-                _weatherData.value = null
-                _currentDateTime.value = LOADING
-                _formattedSunrise.value = LOADING
-                _formattedSunset.value = LOADING
-                _formattedHumidity.value = LOADING
-                _formattedWindSpeed.value = LOADING
-                _currentTemperature.value = DOTS
-                _formattedPressure.value = LOADING
-                _feelsLike.value = LOADING
-                _todayMinMax.value = DOTS
-                _weatherImageResource.value = R.drawable.unknown
-                Log.d("HomeFragmentModel", "weatherDataNULL: ${_weatherData.value}")
-                Log.e("HomeFragmentModel", "$e")
-                clearProperties()
+                withContext(Dispatchers.Main) {
+                    _weatherData.value = null
+                    _currentDateTime.value = LOADING
+                    _formattedSunrise.value = LOADING
+                    _formattedSunset.value = LOADING
+                    _formattedHumidity.value = LOADING
+                    _formattedWindSpeed.value = LOADING
+                    _currentTemperature.value = DOTS
+                    _formattedPressure.value = LOADING
+                    _feelsLike.value = LOADING
+                    _todayMinMax.value = DOTS
+                    _status.value = LOADING
+                    _weatherImageResource.value = R.drawable.unknown
+                    Log.d("HomeFragmentModel", "weatherDataNULL: ${_weatherData.value}")
+                    Log.e("HomeFragmentModel", "$e")
+                    clearProperties()
+                }
             }
         }
     }
@@ -146,38 +179,24 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     private fun getWeatherImageResource(status: String): Int {
-        return when (status) {
-            "Clouds" -> R.drawable.clouds
-            "Clear" -> R.drawable.sunny
-            "Rain" -> R.drawable.rainy
-            "Snow" -> R.drawable.snowy
-            "Fog" -> R.drawable.foggy
-            "Drizzle" -> R.drawable.drizzle
-            "Mist" -> R.drawable.foggy
-            else -> R.drawable.thunderstorm
-        }
+        return WEATHER_IMAGE_RESOURCES[status] ?: R.drawable.unknown
     }
 
     private fun translateWeatherCondition(weatherCondition: String?): String {
         if (weatherCondition == null) {
             return ""
         }
-        return when (weatherCondition) {
-            "Clear" -> "Vedro"
-            "Clouds" -> "Oblaci"
-            "Rain" -> "Kiša"
-            "Thunderstorm" -> "Grmljavina"
-            "Snow" -> "Snijeg"
-            "Fog" -> "Magla"
-            "Drizzle" -> "Sitna kiša"
-            "Mist" -> "Magla"
-            else -> weatherCondition
-        }
+        return WEATHER_TRANSLATIONS.keys.find {
+            it.equals(weatherCondition, ignoreCase = true)
+        }?.let {
+            WEATHER_TRANSLATIONS[it]
+        } ?: weatherCondition
     }
 
     fun setSelectedCity(city: City) {
-        selectedCity.value = city
+        _selectedCity.value = city
         sharedPreferences.edit().putString(selectedCityKey, city.name).apply()
+        sharedPreferences.edit().putString(selectedCityCountry, city.country).apply()
     }
 }
 

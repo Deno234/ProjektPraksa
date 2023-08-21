@@ -18,11 +18,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(binding.fragmentContainer.id) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(binding.fragmentContainer.id) as NavHostFragment
         navController = navHostFragment.navController
 
-        val rootView = binding.fragmentContainer
         val backgroundColor = getBackgroundColor()
-        rootView.setBackgroundResource(backgroundColor)
+        binding.fragmentContainer.setBackgroundResource(backgroundColor)
     }
 }
