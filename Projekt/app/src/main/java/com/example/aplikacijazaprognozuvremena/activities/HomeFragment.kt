@@ -47,7 +47,7 @@ class HomeFragment : Fragment(), OnCitySelectedListener {
         { city ->
             binding.address.text = city.name
 
-            viewModel.getWeatherData(city.name + "," + city.country)
+            viewModel.getWeatherData(city)
             Log.d("HomeFragment", "selected City observe")
         }
     }

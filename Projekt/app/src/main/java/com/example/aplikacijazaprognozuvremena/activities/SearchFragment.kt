@@ -69,6 +69,7 @@ class SearchFragment : Fragment(), OnCitySelectedListener {
         })
         @Suppress("UNUSED_VARIABLE")
         val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            viewModel.stopFetchingData()
             findNavController().navigate(R.id.homeFragment)
         }
     }

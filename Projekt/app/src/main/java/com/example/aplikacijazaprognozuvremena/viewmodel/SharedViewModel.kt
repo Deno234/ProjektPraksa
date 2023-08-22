@@ -14,7 +14,7 @@ import com.example.aplikacijazaprognozuvremena.activities.City
 import com.example.aplikacijazaprognozuvremena.network.dataclasses.WeatherData
 import com.example.aplikacijazaprognozuvremena.networkstatus.NetworkStatusMonitor
 import com.example.aplikacijazaprognozuvremena.publicdata.WeatherImage.WEATHER_IMAGE_RESOURCES
-import com.example.aplikacijazaprognozuvremena.publicdata.WeatherTranslation.WEATHER_TRANSLATIONS
+import com.example.aplikacijazaprognozuvremena.publicdata.WeatherTranslation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Runnable
 import kotlinx.coroutines.launch
@@ -36,8 +36,8 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     private val selectedCityCountry = "selected_country"
     private val _selectedCity = MutableLiveData(
         City(
-            sharedPreferences.getString(selectedCityKey, "Zagreb")!!,
-            sharedPreferences.getString(selectedCityCountry, "hr")!!
+            sharedPreferences.getString(selectedCityKey, "Zagreb") ?: "Zagreb",
+            sharedPreferences.getString(selectedCityCountry, "hr") ?: "hr"
         )
     )
     val selectedCity: LiveData<City> = _selectedCity
@@ -89,11 +89,14 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     private val _status = MutableLiveData<String>()
     val status: LiveData<String> = _status
 
+    private var lastCity: City? = null
+    private var shouldFetchData = true
+
     private val handler = Handler(Looper.getMainLooper())
     private val runnable = object : Runnable {
         override fun run() {
             _selectedCity.value?.let {
-                getWeatherData(it.name + "," + it.country)
+                getWeatherData(it)
             }
             handler.postDelayed(this, 30 * 60 * 1000) //svakih 30 minuta
         }
@@ -102,7 +105,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
 
     init {
         _selectedCity.value?.let {
-            getWeatherData(it.name + "," + it.country)
+            getWeatherData(it)
         }
         networkStatusMonitor.startMonitoring()
         handler.post(runnable)
@@ -114,16 +117,25 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         networkStatusMonitor.stopMonitoring()
     }
 
-    fun getWeatherData(city: String) {
+    fun getWeatherData(city: City) {
+
+        if (!shouldFetchData) {
+            shouldFetchData = true
+            return
+        }
+
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val weatherData2 = WeatherApi.retrofitService.getWeather(city)
+                lastCity = city
+                val weatherData2 =
+                    WeatherApi.retrofitService.getWeather(city.name + "," + city.country)
                 withContext(Dispatchers.Main) {
                     _weatherData.value = weatherData2
                     Log.d("HomeFragmentModel", "weatherData: ${_weatherData.value}")
                     updateProperties()
                 }
             } catch (e: Exception) {
+                lastCity = city
                 withContext(Dispatchers.Main) {
                     _weatherData.value = null
                     _currentDateTime.value = LOADING
@@ -169,6 +181,16 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
+    fun checkAndLoadData() {
+        selectedCity.value?.let { city ->
+            if (city != lastCity || status.value == LOADING) {
+                getWeatherData(city)
+                Log.d("NetworkStatusMonitor", "called getWeatherData")
+                lastCity = city
+            }
+        }
+    }
+
 
     private fun clearProperties() {
         weatherData.value = null
@@ -182,21 +204,19 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         return WEATHER_IMAGE_RESOURCES[status] ?: R.drawable.unknown
     }
 
-    private fun translateWeatherCondition(weatherCondition: String?): String {
-        if (weatherCondition == null) {
-            return ""
-        }
-        return WEATHER_TRANSLATIONS.keys.find {
-            it.equals(weatherCondition, ignoreCase = true)
-        }?.let {
-            WEATHER_TRANSLATIONS[it]
-        } ?: weatherCondition
+    private fun translateWeatherCondition(weatherCondition: String?): String? {
+        return WeatherTranslation.translate(weatherCondition)
     }
 
     fun setSelectedCity(city: City) {
         _selectedCity.value = city
         sharedPreferences.edit().putString(selectedCityKey, city.name).apply()
         sharedPreferences.edit().putString(selectedCityCountry, city.country).apply()
+        shouldFetchData = true
+    }
+
+    fun stopFetchingData() {
+        shouldFetchData = false
     }
 }
 
